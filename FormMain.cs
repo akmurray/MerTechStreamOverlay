@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace MerTechStreamOverlay
 {
@@ -37,6 +38,18 @@ namespace MerTechStreamOverlay
 			this.Size = new Size(304, 101);
 			this.BackColor = Color.Black;
 			this.TransparencyKey = this.BackColor;
+
+			// Read opacity from app.config
+			double opacity;
+			if (double.TryParse(ConfigurationManager.AppSettings["Opacity"], out opacity))
+			{
+				this.Opacity = opacity; // Set the form's opacity based on the configuration
+			}
+			else
+			{
+				// Handle the case where parsing fails, maybe set a default opacity
+				this.Opacity = 0.9; // Default value from your config
+			}
 
 			// Set up mouse events for dragging
 			this.MouseDown += FormMain_MouseDown;
@@ -219,19 +232,23 @@ namespace MerTechStreamOverlay
 		{
 			base.OnVisibleChanged(e);
 
-			if (this.Visible)
+			bool disableWhenNotVisible = false;
+			if (disableWhenNotVisible)
 			{
-				// Resume all panels' timers
-				cpuPanel?.Resume();
-				mousePanel?.Resume();
-				keyboardPanel?.Resume();
-			}
-			else
-			{
-				// Pause all panels' timers
-				cpuPanel?.Pause();
-				mousePanel?.Pause();
-				keyboardPanel?.Pause();
+				if (this.Visible)
+				{
+					// Resume all panels' timers
+					cpuPanel?.Resume();
+					mousePanel?.Resume();
+					keyboardPanel?.Resume();
+				}
+				else
+				{
+					// Pause all panels' timers
+					cpuPanel?.Pause();
+					mousePanel?.Pause();
+					keyboardPanel?.Pause();
+				}
 			}
 		}
 
