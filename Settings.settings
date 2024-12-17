@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MerTechStreamOverlay" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="UseTransparentBackground" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="BackgroundColorHex" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">#000000</Value>
+    </Setting>
+    <Setting Name="Opacity" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">0.7</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -27,6 +27,9 @@ namespace MerTechStreamOverlay
 		{
 			InitializeComponent();
 
+			Settings settings = Settings.Default;
+
+
 			// Set form icon
 			this.Icon = new Icon("logo-tiny-32.ico");
 
@@ -37,19 +40,22 @@ namespace MerTechStreamOverlay
 			this.StartPosition = FormStartPosition.CenterScreen;
 			this.Size = new Size(304, 101);
 			this.BackColor = Color.Black;
-			this.TransparencyKey = this.BackColor;
 
-			// Read opacity from app.config
-			double opacity;
-			if (double.TryParse(ConfigurationManager.AppSettings["Opacity"], out opacity))
+			//bg color and transparency
+			if (settings.UseTransparentBackground)
 			{
-				this.Opacity = opacity; // Set the form's opacity based on the configuration
+				this.TransparencyKey = this.BackColor; // Assuming 'this' is your Form or Control
 			}
-			else
+
+			try
 			{
-				// Handle the case where parsing fails, maybe set a default opacity
-				this.Opacity = 0.9; // Default value from your config
+				this.BackColor = System.Drawing.ColorTranslator.FromHtml(settings.BackgroundColorHex);
 			}
+			catch (Exception ex)
+			{
+			}
+
+			this.Opacity = Math.Max(0.1, settings.Opacity);
 
 			// Set up mouse events for dragging
 			this.MouseDown += FormMain_MouseDown;
